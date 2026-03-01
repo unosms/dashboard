@@ -15,9 +15,14 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('settings.edit')" :active="request()->routeIs('settings.*')">
-                        {{ __('Settings') }}
-                    </x-nav-link>
+                    @if (Auth::user()?->is_admin)
+                        <x-nav-link :href="route('settings.edit')" :active="request()->routeIs('settings.*')">
+                            {{ __('Settings') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
+                            {{ __('User Manager') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -73,9 +78,14 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('settings.edit')" :active="request()->routeIs('settings.*')">
-                {{ __('Settings') }}
-            </x-responsive-nav-link>
+            @if (Auth::user()?->is_admin)
+                <x-responsive-nav-link :href="route('settings.edit')" :active="request()->routeIs('settings.*')">
+                    {{ __('Settings') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('users.index')" :active="request()->routeIs('users.*')">
+                    {{ __('User Manager') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

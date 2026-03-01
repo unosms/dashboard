@@ -3,6 +3,7 @@
 namespace App\Support;
 
 use App\Models\DashboardApp;
+use App\Models\User;
 use Illuminate\Support\Facades\Schema;
 
 class DashboardApps
@@ -38,14 +39,20 @@ class DashboardApps
         return Schema::hasTable('dashboard_apps');
     }
 
+    public static function permissionsReady(): bool
+    {
+        return Schema::hasTable('dashboard_app_user');
+    }
+
     /**
      * @return array<int, array<string, mixed>>
      */
-    public static function all(): array
+    public static function all(?User $user = null): array
     {
         $defaults = self::defaults();
         if (!self::storageReady()) {
             return array_map(static function (array $item): array {
+                $item['id'] = null;
                 $item['username'] = '';
                 $item['password'] = '';
                 return $item;
@@ -54,16 +61,23 @@ class DashboardApps
 
         self::ensureRecords();
         $stored = DashboardApp::query()->get()->keyBy('app_key');
+        $allowedKeys = null;
 
-        return array_map(static function (array $item) use ($stored): array {
+        if ($user !== null && !$user->is_admin && self::permissionsReady()) {
+            $allowedKeys = $user->dashboardApps()->pluck('dashboard_apps.app_key')->all();
+        }
+
+        $apps = array_map(static function (array $item) use ($stored): array {
             $record = $stored->get($item['key']);
             if ($record === null) {
+                $item['id'] = null;
                 $item['username'] = '';
                 $item['password'] = '';
                 return $item;
             }
 
             return [
+                'id' => $record->id,
                 'key' => $item['key'],
                 'name' => $item['name'],
                 'theme' => $item['theme'],
@@ -72,6 +86,14 @@ class DashboardApps
                 'password' => $record->password ?? '',
             ];
         }, $defaults);
+
+        if ($allowedKeys === null) {
+            return $apps;
+        }
+
+        return array_values(array_filter($apps, static function (array $item) use ($allowedKeys): bool {
+            return in_array($item['key'], $allowedKeys, true);
+        }));
     }
 
     public static function ensureRecords(): void
@@ -81,7 +103,7 @@ class DashboardApps
         }
 
         foreach (self::defaults() as $index => $item) {
-            DashboardApp::query()->firstOrCreate(
+            DashboardApp::query()->updateOrCreate(
                 ['app_key' => $item['key']],
                 [
                     'name' => $item['name'],
@@ -95,4 +117,3 @@ class DashboardApps
         }
     }
 }
-

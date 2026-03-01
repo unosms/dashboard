@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Restream Decoder by Lightwave</title>
+    <title>Lightwave Dashboard</title>
     <link rel="icon" type="image/png" href="{{ asset('lightwave.png') }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
@@ -61,18 +61,9 @@
             align-items: center;
         }
         .title {
-            margin: 0 0 8px;
+            margin: 0;
             font-size: 34px;
             line-height: 1.1;
-            font-weight: 800;
-        }
-        .subtitle {
-            margin: 0;
-            color: #475569;
-            font-size: 18px;
-        }
-        .brand {
-            color: #0ea5e9;
             font-weight: 800;
         }
         .logo-box {
@@ -121,9 +112,6 @@
             .title {
                 font-size: 28px;
             }
-            .subtitle {
-                font-size: 16px;
-            }
         }
     </style>
 </head>
@@ -145,8 +133,7 @@
     <main class="hero">
         <section class="card">
             <div class="title-wrap">
-                <h1 class="title">Restream Decoder</h1>
-                <p class="subtitle">by <span class="brand">Lightwave</span></p>
+                <h1 class="title">Lightwave Dashboard</h1>
             </div>
             <div class="logo-box">
                 <img src="{{ asset('lightwave.png') }}" alt="Lightwave Logo">

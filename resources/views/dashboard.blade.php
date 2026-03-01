@@ -7,18 +7,21 @@
 
     @php
         $apps = [
-            ['key' => 'radius', 'name' => 'Radius', 'theme' => 'theme-radius'],
-            ['key' => 'olt', 'name' => 'OLT Manager', 'theme' => 'theme-olt'],
-            ['key' => 'fiber-map', 'name' => 'Vertio Fiber Map', 'theme' => 'theme-map'],
-            ['key' => 'middleware', 'name' => 'Middleware', 'theme' => 'theme-middleware'],
-            ['key' => 'stock', 'name' => 'Stock Manager', 'theme' => 'theme-stock'],
-            ['key' => 'iptv', 'name' => 'XTREAM IPTV', 'theme' => 'theme-iptv'],
-            ['key' => 'twister', 'name' => 'TWISTER', 'theme' => 'theme-twister'],
-            ['key' => 'voip', 'name' => 'VOIP', 'theme' => 'theme-voip'],
-            ['key' => 'netplay', 'name' => 'NETPLAY', 'theme' => 'theme-netplay'],
-            ['key' => 'crm', 'name' => 'CRM', 'theme' => 'theme-crm'],
-            ['key' => 'storage', 'name' => 'STORAGE', 'theme' => 'theme-storage'],
-            ['key' => 'log', 'name' => 'LOG Server', 'theme' => 'theme-log'],
+            ['key' => 'radius', 'name' => 'Radius', 'theme' => 'theme-radius', 'url' => 'http://89.43.132.141'],
+            ['key' => 'olt', 'name' => 'OLT Manager', 'theme' => 'theme-olt', 'url' => 'http://89.43.132.136:11890'],
+            ['key' => 'fiber-map', 'name' => 'Vertio Fiber Map', 'theme' => 'theme-map', 'url' => 'http://89.43.132.136:11880'],
+            ['key' => 'middleware', 'name' => 'Middleware', 'theme' => 'theme-middleware', 'url' => 'http://89.43.132.136:62111'],
+            ['key' => 'stock', 'name' => 'Stock Manager', 'theme' => 'theme-stock', 'url' => null],
+            ['key' => 'iptv', 'name' => 'XTREAM IPTV', 'theme' => 'theme-iptv', 'url' => 'http://89.43.132.136:25500'],
+            ['key' => 'twister', 'name' => 'TWISTER', 'theme' => 'theme-twister', 'url' => 'http://89.43.132.136:29180'],
+            ['key' => 'voip', 'name' => 'VOIP', 'theme' => 'theme-voip', 'url' => 'http://89.43.132.135'],
+            ['key' => 'netplay', 'name' => 'NETPLAY', 'theme' => 'theme-netplay', 'url' => 'http://89.43.132.134'],
+            ['key' => 'crm', 'name' => 'CRM', 'theme' => 'theme-crm', 'url' => null],
+            ['key' => 'storage', 'name' => 'STORAGE', 'theme' => 'theme-storage', 'url' => null],
+            ['key' => 'log', 'name' => 'LOG Server', 'theme' => 'theme-log', 'url' => null],
+            ['key' => 'astra', 'name' => 'Astra', 'theme' => 'theme-astra', 'url' => 'http://89.43.132.136:8000'],
+            ['key' => 'tunner-1', 'name' => 'Tunner 1', 'theme' => 'theme-tunner-1', 'url' => 'http://89.43.132.136:680'],
+            ['key' => 'tunner-2', 'name' => 'Tunner 2', 'theme' => 'theme-tunner-2', 'url' => 'http://89.43.132.136:681'],
         ];
     @endphp
 
@@ -27,7 +30,14 @@
             <div class="lw-surface overflow-hidden shadow-sm sm:rounded-2xl p-6 sm:p-8">
                 <div class="lw-grid">
                     @foreach ($apps as $app)
-                        <button type="button" class="lw-tile">
+                        <button
+                            type="button"
+                            class="lw-tile {{ empty($app['url']) ? 'lw-no-link' : '' }}"
+                            data-app-name="{{ $app['name'] }}"
+                            data-app-url="{{ $app['url'] ?? '' }}"
+                            data-app-username="{{ $app['username'] ?? '' }}"
+                            data-app-password="{{ $app['password'] ?? '' }}"
+                        >
                             <span class="lw-icon-box {{ $app['theme'] }}">
                                 <svg class="lw-svg" viewBox="0 0 48 48" aria-hidden="true">
                                     @switch($app['key'])
@@ -123,6 +133,24 @@
                                             <rect class="i-sf" x="16" y="30" width="16" height="6" rx="1.5"/>
                                             <path class="i-p" d="M18 33 H20 M22 33 H30"/>
                                             @break
+
+                                        @case('astra')
+                                            <polygon class="i-pf" points="24,8 27.8,18.2 38.8,18.2 30,24.6 33.4,35.3 24,28.7 14.6,35.3 18,24.6 9.2,18.2 20.2,18.2"/>
+                                            <circle class="i-af" cx="24" cy="24" r="2.5"/>
+                                            @break
+
+                                        @case('tunner-1')
+                                            <circle class="i-p" cx="24" cy="24" r="10"/>
+                                            <path class="i-a" d="M24 14 V24 L30 28"/>
+                                            <circle class="i-af" cx="24" cy="24" r="2"/>
+                                            <text x="24" y="45" text-anchor="middle" class="i-t">1</text>
+                                            @break
+
+                                        @case('tunner-2')
+                                            <circle class="i-p" cx="24" cy="24" r="10"/>
+                                            <path class="i-a" d="M19 30 C20 27 22.3 25 25.5 24.2 C28.2 23.5 30 21.8 30 19.5 C30 17 27.8 15 24.8 15 C22.4 15 20.4 16.3 19 18.5"/>
+                                            <text x="24" y="45" text-anchor="middle" class="i-t">2</text>
+                                            @break
                                     @endswitch
                                 </svg>
                             </span>
@@ -134,7 +162,77 @@
         </div>
     </div>
 
+    <div id="credentialsLayer" class="lw-layer hidden">
+        <div class="lw-layer-backdrop" data-close-layer="1"></div>
+        <div class="lw-layer-card" role="dialog" aria-modal="true" aria-labelledby="layerTitle">
+            <button type="button" class="lw-layer-close" id="closeLayerBtn" aria-label="Close">x</button>
+            <h3 id="layerTitle" class="lw-layer-title">Credentials</h3>
+            <p class="lw-layer-app" id="layerAppName"></p>
+            <div class="lw-cred-row">
+                <span class="lw-cred-key">Username:</span>
+                <span class="lw-cred-value" id="layerUsername">Not set</span>
+            </div>
+            <div class="lw-cred-row">
+                <span class="lw-cred-key">Password:</span>
+                <span class="lw-cred-value" id="layerPassword">Not set</span>
+            </div>
+            <p class="lw-layer-note" id="layerUrlNote"></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const layer = document.getElementById('credentialsLayer');
+            const appName = document.getElementById('layerAppName');
+            const username = document.getElementById('layerUsername');
+            const password = document.getElementById('layerPassword');
+            const urlNote = document.getElementById('layerUrlNote');
+            const closeBtn = document.getElementById('closeLayerBtn');
+
+            document.querySelectorAll('.lw-tile').forEach((tile) => {
+                tile.addEventListener('click', () => {
+                    const name = tile.dataset.appName || 'Application';
+                    const url = tile.dataset.appUrl || '';
+                    const user = tile.dataset.appUsername || 'Not set';
+                    const pass = tile.dataset.appPassword || 'Not set';
+
+                    if (url) {
+                        window.open(url, '_blank', 'noopener,noreferrer');
+                        urlNote.textContent = 'Opened: ' + url;
+                    } else {
+                        urlNote.textContent = 'No URL configured for this tile.';
+                    }
+
+                    appName.textContent = name;
+                    username.textContent = user;
+                    password.textContent = pass;
+                    layer.classList.remove('hidden');
+                    document.body.classList.add('lw-no-scroll');
+                });
+            });
+
+            const closeLayer = () => {
+                layer.classList.add('hidden');
+                document.body.classList.remove('lw-no-scroll');
+            };
+
+            closeBtn.addEventListener('click', closeLayer);
+            layer.querySelectorAll('[data-close-layer="1"]').forEach((el) => {
+                el.addEventListener('click', closeLayer);
+            });
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && !layer.classList.contains('hidden')) {
+                    closeLayer();
+                }
+            });
+        });
+    </script>
+
     <style>
+        .lw-no-scroll {
+            overflow: hidden;
+        }
         .lw-surface {
             background: linear-gradient(145deg, #edeaf8 0%, #e9edf9 48%, #ebe9f7 100%);
             border: 1px solid #dde3f3;
@@ -162,6 +260,13 @@
             background: transparent;
             border: 0;
             cursor: pointer;
+            text-decoration: none;
+        }
+        .lw-no-link .lw-label {
+            color: #7e8aa4;
+        }
+        .lw-no-link .lw-icon-box {
+            filter: grayscale(18%);
         }
         .lw-icon-box {
             width: 88px;
@@ -205,6 +310,12 @@
         .lw-svg .i-sf {
             fill: var(--icon-soft);
         }
+        .lw-svg .i-t {
+            fill: var(--icon-primary);
+            font-size: 10px;
+            font-weight: 700;
+            font-family: Arial, sans-serif;
+        }
         .theme-radius { --icon-primary: #1e64e8; --icon-accent: #30c4ff; --icon-soft: #e8f4ff; }
         .theme-olt { --icon-primary: #0a7fa0; --icon-accent: #24c8c8; --icon-soft: #e8fbfb; }
         .theme-map { --icon-primary: #1278bb; --icon-accent: #5dd4ff; --icon-soft: #e9f7ff; }
@@ -217,6 +328,9 @@
         .theme-crm { --icon-primary: #4f46e5; --icon-accent: #ec4899; --icon-soft: #f3eeff; }
         .theme-storage { --icon-primary: #0369a1; --icon-accent: #06b6d4; --icon-soft: #e9fbff; }
         .theme-log { --icon-primary: #1e3a8a; --icon-accent: #3b82f6; --icon-soft: #edf2ff; }
+        .theme-astra { --icon-primary: #0f766e; --icon-accent: #2dd4bf; --icon-soft: #e9fffa; }
+        .theme-tunner-1 { --icon-primary: #1d4ed8; --icon-accent: #60a5fa; --icon-soft: #eaf2ff; }
+        .theme-tunner-2 { --icon-primary: #6d28d9; --icon-accent: #a78bfa; --icon-soft: #f3eeff; }
         .lw-label {
             margin-top: 10px;
             font-size: 16px;
@@ -227,6 +341,82 @@
             min-height: 38px;
             display: flex;
             align-items: center;
+        }
+        .lw-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 70;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+        }
+        .lw-layer.hidden {
+            display: none;
+        }
+        .lw-layer-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.6);
+        }
+        .lw-layer-card {
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            background: #ffffff;
+            border-radius: 14px;
+            border: 1px solid #dbe3f6;
+            box-shadow: 0 14px 30px rgba(15, 23, 42, 0.3);
+            padding: 22px;
+            z-index: 1;
+        }
+        .lw-layer-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            border: 1px solid #c8d2ea;
+            background: #f6f8ff;
+            font-weight: 700;
+            line-height: 1;
+        }
+        .lw-layer-title {
+            margin: 0;
+            color: #1f355c;
+            font-size: 22px;
+            font-weight: 700;
+        }
+        .lw-layer-app {
+            margin: 8px 0 16px;
+            font-size: 15px;
+            color: #3b4b6c;
+            font-weight: 600;
+        }
+        .lw-cred-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #d9e1f3;
+            border-radius: 10px;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            background: #f9fbff;
+        }
+        .lw-cred-key {
+            color: #395380;
+            font-weight: 700;
+        }
+        .lw-cred-value {
+            color: #0f172a;
+            font-family: Consolas, "Courier New", monospace;
+        }
+        .lw-layer-note {
+            margin: 10px 0 0;
+            color: #64748b;
+            font-size: 13px;
+            word-break: break-all;
         }
     </style>
 </x-app-layout>

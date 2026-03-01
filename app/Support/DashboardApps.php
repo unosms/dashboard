@@ -103,7 +103,7 @@ class DashboardApps
         }
 
         foreach (self::defaults() as $index => $item) {
-            DashboardApp::query()->updateOrCreate(
+            $app = DashboardApp::query()->firstOrCreate(
                 ['app_key' => $item['key']],
                 [
                     'name' => $item['name'],
@@ -114,6 +114,13 @@ class DashboardApps
                     'position' => $index + 1,
                 ]
             );
+
+            // Keep static metadata in sync without touching saved URL/credentials.
+            $app->fill([
+                'name' => $item['name'],
+                'theme' => $item['theme'],
+                'position' => $index + 1,
+            ])->save();
         }
     }
 }

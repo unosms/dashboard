@@ -22,6 +22,8 @@
             ['key' => 'astra', 'name' => 'Astra', 'theme' => 'theme-astra', 'url' => 'http://89.43.132.136:8000'],
             ['key' => 'tunner-1', 'name' => 'Tunner 1', 'theme' => 'theme-tunner-1', 'url' => 'http://89.43.132.136:680'],
             ['key' => 'tunner-2', 'name' => 'Tunner 2', 'theme' => 'theme-tunner-2', 'url' => 'http://89.43.132.136:681'],
+            ['key' => 'vmware', 'name' => 'vmware', 'theme' => 'theme-vmware', 'url' => 'https://89.43.132.136:580'],
+            ['key' => 'hls-decoder', 'name' => 'HLS Decoder', 'theme' => 'theme-hls-decoder', 'url' => 'http://89.43.132.136:28777'],
         ];
     @endphp
 
@@ -150,6 +152,20 @@
                                             <circle class="i-p" cx="24" cy="24" r="10"/>
                                             <path class="i-a" d="M19 30 C20 27 22.3 25 25.5 24.2 C28.2 23.5 30 21.8 30 19.5 C30 17 27.8 15 24.8 15 C22.4 15 20.4 16.3 19 18.5"/>
                                             <text x="24" y="45" text-anchor="middle" class="i-t">2</text>
+                                            @break
+
+                                        @case('vmware')
+                                            <rect class="i-pf" x="10" y="14" width="12" height="12" rx="2"/>
+                                            <rect class="i-af" x="17" y="22" width="12" height="12" rx="2"/>
+                                            <rect class="i-pf" x="26" y="14" width="12" height="12" rx="2"/>
+                                            <path class="i-a" d="M13 18 L19 24 M29 18 L25 22 M33 18 L27 24"/>
+                                            @break
+
+                                        @case('hls-decoder')
+                                            <rect class="i-sf" x="8" y="10" width="32" height="28" rx="5"/>
+                                            <rect class="i-p" x="10" y="12" width="28" height="24" rx="4"/>
+                                            <path class="i-af" d="M20 19 L29 24 L20 29 Z"/>
+                                            <path class="i-a" d="M13 33 C16 29.8 18.7 29.8 21.7 33 C24.7 36.2 27.3 36.2 30.3 33 C33.3 29.8 36 29.8 39 33"/>
                                             @break
                                     @endswitch
                                 </svg>
@@ -331,6 +347,8 @@
         .theme-astra { --icon-primary: #0f766e; --icon-accent: #2dd4bf; --icon-soft: #e9fffa; }
         .theme-tunner-1 { --icon-primary: #1d4ed8; --icon-accent: #60a5fa; --icon-soft: #eaf2ff; }
         .theme-tunner-2 { --icon-primary: #6d28d9; --icon-accent: #a78bfa; --icon-soft: #f3eeff; }
+        .theme-vmware { --icon-primary: #2563eb; --icon-accent: #38bdf8; --icon-soft: #eef4ff; }
+        .theme-hls-decoder { --icon-primary: #0f766e; --icon-accent: #22d3ee; --icon-soft: #ecfdf5; }
         .lw-label {
             margin-top: 10px;
             font-size: 16px;
